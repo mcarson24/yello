@@ -7,3 +7,45 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+.flex-container {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.flex-center {
+	justify-content: center !important;
+}
+
+.header {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+.items {
+	padding: 10px;
+}
+
+.mar-top-bot-15 {
+	margin: 15px 0 15px 0;
+}
+
+.modal {
+	z-index: 2
+}
+
+.navbar {
+	z-index: 1;
+	a {
+		border-bottom: 1px solid #d3e0e9;
+	}
+}
+
+.task-form {
+	padding: 10px;
+}
+
+.center-text {
+	justify-content: center;
+}
