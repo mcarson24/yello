@@ -8444,3 +8444,9 @@ nav.navbar {
   position: initial !important;
 }
 
+.panel-heading {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
