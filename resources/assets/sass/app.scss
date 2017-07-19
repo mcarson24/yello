@@ -8,10 +8,15 @@
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+html, body {
+	height: 100%;
+}
+
 .flex-container {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
+	flex-wrap: wrap;
 }
 
 .flex-center {
@@ -48,4 +53,18 @@
 
 .center-text {
 	justify-content: center;
+}
+
+.section {
+	display: flex;
+	margin-bottom: 25px;
+}
+
+.todo-container {
+	min-height: 100%;
+}
+
+.hide-button-style {
+	border: none;
+	background: transparent;
 }

@@ -6,7 +6,7 @@
 		    <!-- Any other Bulma elements you want -->
 		    <div class="task-form">
 				<div class="field">
-				  <label class="label">Title</label>
+				  <label class="label">Task Title</label>
 				  <div class="control">
 				    <input class="input" type="text" placeholder="Task Title">
 				  </div>

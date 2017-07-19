@@ -1,28 +1,47 @@
 <div class="card mar-top-bot-15">
 	<header class="card-header">
 		<p class="card-header-title center-text">
-			Title
+			{{ $todo->title }}
 		</p>
 		<a class="card-header-icon">
 			<span class="icon">
-				<i class="fa fa-times"></i>
+				{{-- <form action="{{ action('TodosController@destroy', $todo)}}" method="POST">
+					{{ csrf_field() }}
+					{{ method_field('delete') }}
+					<button type="submit" class="hide-button-style">
+						<i class="fa fa-times"></i>
+					</button>
+				</form> --}}
+				<i class="fa fa-times" @click="deleteTask(task)"></i>
 			</span>
 		</a>
 	</header>
 	<div class="card-content">
 		<div class="content">
-			This will be the content or the description of the task.
-			<a>@bulmaio</a>. <a>#css</a> <a>#responsive</a>
+			{{ $todo->description }}
 			<br>
-			<small>11:09 PM - 1 Jan 2016</small>
+			<small>{{ $todo->formatted_date }}</small>
 		</div>
 	</div>
 	<footer class="card-footer">
-		<a class="card-footer-item">
+		@if ($todo->isStillTodo())
+			<a class="card-footer-item" href="#">
+		@elseif ($todo->isBeingDone())
+			<a class="card-footer-item" href="{{ action('TodosController@update', [$todo, 'todo']) }}">
+		@else
+			<a class="card-footer-item" href="{{ action('TodosController@update', [$todo, 'doing']) }}">
+		@endif
+		{{-- <a class="card-footer-item" href="{{ action('TodosController@update', [$todo, 'doing']) }}"> --}}
 			<i class="fa fa-angle-double-left"></i>
 		</a>
 		<a class="card-footer-item">Edit</a>
-		<a class="card-footer-item">
+		@if ($todo->isStillTodo())
+			<a class="card-footer-item" href="{{ action('TodosController@update', [$todo, 'doing']) }}">
+		@elseif ($todo->isBeingDone())
+			<a class="card-footer-item" href="{{ action('TodosController@update', [$todo, 'done']) }}">
+		@else
+			<a class="card-footer-item" href="#">
+		@endif
 			<i class="fa fa-angle-double-right"></i>
 		</a>
 	</footer>
