@@ -40,9 +40,4 @@ class Todo extends Model
     {
     	return $this->status == 2;
     }
-
-    public function getFormattedDateAttribute()
-    {
-    	return $this->created_at->format('g:i A - j M Y');
-    }
 }

@@ -3,7 +3,6 @@
 		<div class="modal is-active">
 		  <div class="modal-background"></div>
 		  <div class="modal-content">
-		    <!-- Any other Bulma elements you want -->
 		    <div class="task-form">
 		    	<div v-if="hasErrors" class="alert alert-danger" role="alert">
 		    		<ul>
@@ -13,7 +12,7 @@
 				<div class="field">
 				  <label class="label">Title</label>
 				  <div class="control">
-				    <input class="input" type="text" placeholder="Task Title" v-model="dataSet.title" required autofocus>
+				    <input class="input" type="text" placeholder="Go to the grocery store." v-model="dataSet.title" required autofocus>
 				  </div>
 				</div>
 

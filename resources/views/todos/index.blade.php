@@ -10,7 +10,8 @@
 						<a href="#" @click="newTodo = !newTodo">New Task</a>
 						<new-task v-show="newTodo" 
 							 	  @close-new-task="newTodo = !newTodo"
-							 	  @new-task-created="fetchTasks"></new-task>
+							 	  @new-task-created="fetchTasks">
+				 	  	</new-task>
 					</h2>
 					<div class="columns">
 						<div class="flex-container">

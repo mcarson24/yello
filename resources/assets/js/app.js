@@ -15,11 +15,10 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
 Vue.component('todos-view', require('./pages/Todos.vue'));
-Vue.component('todo', require('./components/Todo.vue'));
-Vue.component('todo-listing', require('./components/TodoListing.vue'));
 Vue.component('new-task', require('./components/NewTask.vue'));
+Vue.component('todo-listing', require('./components/TodoListing.vue'));
+Vue.component('todo', require('./components/Todo.vue'));
 
 const app = new Vue({
     el: '#app',

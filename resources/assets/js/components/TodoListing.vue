@@ -4,7 +4,8 @@
 		      :todo="todo" 
 		      :key="todo.id" 
 		      @task-changed="taskChanged"
-		      :column="column"></todo>
+		      :column="column">
+      	</todo>
 	</div>
 </template>
 
