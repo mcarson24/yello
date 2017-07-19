@@ -5,15 +5,20 @@
 		  <div class="modal-content">
 		    <!-- Any other Bulma elements you want -->
 		    <div class="task-form">
+		    	<div v-if="hasErrors" class="alert alert-danger" role="alert">
+		    		<ul>
+		    			<li v-for="error in errors">{{ error[0] }}</li>
+		    		</ul>
+		    	</div>
 				<div class="field">
-				  <label class="label">Task Title</label>
+				  <label class="label">Title</label>
 				  <div class="control">
-				    <input class="input" type="text" placeholder="Task Title" v-model="dataSet.title" required>
+				    <input class="input" type="text" placeholder="Task Title" v-model="dataSet.title" required autofocus>
 				  </div>
 				</div>
 
 				<div class="field">
-				  <label class="label">Task Description</label>
+				  <label class="label">Description</label>
 				  <div class="control">
 				    <textarea class="textarea" placeholder="Pick up eggs, milk, and staples..." v-model="dataSet.description" required></textarea>
 				  </div>
@@ -41,7 +46,8 @@
 				dataSet: {
 					title: '',
 					description: ''
-				}
+				},
+				errors: {}
 			}
 		},
 		methods: {
@@ -49,12 +55,21 @@
 				this.$emit('close-new-task');
 			},
 			createNewTask() {
-				axios.post('/tasks', this.dataSet).then(() => {
+				axios.post('/tasks', this.dataSet).then((response) => {
+					this.dataSet.title = '';
+					this.dataSet.description = '';
 					this.$emit('new-task-created');
 					this.$emit('close-new-task');
 				}).catch(error => {
-					console.log(error);
+					if (error.response.status == 422) {
+						this.errors = error.response.data;
+					}
 				});
+			}
+		},
+		computed: {
+			hasErrors() {
+				return Object.keys(this.errors).length > 0;
 			}
 		}
 	}

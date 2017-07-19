@@ -42128,6 +42128,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -42135,7 +42140,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			dataSet: {
 				title: '',
 				description: ''
-			}
+			},
+			errors: {}
 		};
 	},
 
@@ -42146,12 +42152,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		createNewTask: function createNewTask() {
 			var _this = this;
 
-			axios.post('/tasks', this.dataSet).then(function () {
+			axios.post('/tasks', this.dataSet).then(function (response) {
+				_this.dataSet.title = '';
+				_this.dataSet.description = '';
 				_this.$emit('new-task-created');
 				_this.$emit('close-new-task');
 			}).catch(function (error) {
-				console.log(error);
+				if (error.response.status == 422) {
+					_this.errors = error.response.data;
+				}
 			});
+		}
+	},
+	computed: {
+		hasErrors: function hasErrors() {
+			return Object.keys(this.errors).length > 0;
 		}
 	}
 });
@@ -42169,11 +42184,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-content"
   }, [_c('div', {
     staticClass: "task-form"
-  }, [_c('div', {
+  }, [(_vm.hasErrors) ? _c('div', {
+    staticClass: "alert alert-danger",
+    attrs: {
+      "role": "alert"
+    }
+  }, [_c('ul', _vm._l((_vm.errors), function(error) {
+    return _c('li', [_vm._v(_vm._s(error[0]))])
+  }))]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "field"
   }, [_c('label', {
     staticClass: "label"
-  }, [_vm._v("Task Title")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Title")]), _vm._v(" "), _c('div', {
     staticClass: "control"
   }, [_c('input', {
     directives: [{
@@ -42186,7 +42208,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "text",
       "placeholder": "Task Title",
-      "required": ""
+      "required": "",
+      "autofocus": ""
     },
     domProps: {
       "value": (_vm.dataSet.title)
@@ -42201,7 +42224,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "field"
   }, [_c('label', {
     staticClass: "label"
-  }, [_vm._v("Task Description")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Description")]), _vm._v(" "), _c('div', {
     staticClass: "control"
   }, [_c('textarea', {
     directives: [{
