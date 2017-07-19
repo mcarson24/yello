@@ -8397,12 +8397,16 @@ body {
   z-index: 2;
 }
 
+nav.navbar {
+  border: none;
+}
+
 .navbar {
   z-index: 1;
 }
 
 .navbar a {
-  border-bottom: 1px solid #d3e0e9;
+  border: none;
 }
 
 .task-form {
@@ -8429,5 +8433,14 @@ body {
 .hide-button-style {
   border: none;
   background: transparent;
+}
+
+.slight-shadow {
+  -webkit-box-shadow: 2px 2px 7px -3px;
+          box-shadow: 2px 2px 7px -3px;
+}
+
+.dropdown-menu {
+  position: initial !important;
 }
 

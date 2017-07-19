@@ -3,7 +3,7 @@
 @section('content')
 	<div class="container">
 		<todo-view inline-template>
-			<section class="section">
+			<section class="section slight-shadow">
 				<div class="container todo-container">
 					<h1 class="title text-center">Your Tasks</h1>
 					<h2 class="subtitle text-center">
