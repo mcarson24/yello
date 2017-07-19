@@ -8,20 +8,20 @@
 				<div class="field">
 				  <label class="label">Task Title</label>
 				  <div class="control">
-				    <input class="input" type="text" placeholder="Task Title">
+				    <input class="input" type="text" placeholder="Task Title" v-model="dataSet.title" required>
 				  </div>
 				</div>
 
 				<div class="field">
 				  <label class="label">Task Description</label>
 				  <div class="control">
-				    <textarea class="textarea" placeholder="Pick up eggs, milk, and staples..."></textarea>
+				    <textarea class="textarea" placeholder="Pick up eggs, milk, and staples..." v-model="dataSet.description" required></textarea>
 				  </div>
 				</div>
 
 				<div class="field is-grouped flex-center">
 				  <div class="control">
-				    <button class="button is-primary">Submit</button>
+				    <button class="button is-primary" @click="createNewTask">Submit</button>
 				  </div>
 				  <div class="control">
 				    <button class="button is-link" @click="closeModal">Cancel</button>
@@ -36,9 +36,25 @@
 
 <script>
 	export default {
+		data() {
+			return {
+				dataSet: {
+					title: '',
+					description: ''
+				}
+			}
+		},
 		methods: {
 			closeModal() {
 				this.$emit('close-new-task');
+			},
+			createNewTask() {
+				axios.post('/tasks', this.dataSet).then(() => {
+					this.$emit('new-task-created');
+					this.$emit('close-new-task');
+				}).catch(error => {
+					console.log(error);
+				});
 			}
 		}
 	}

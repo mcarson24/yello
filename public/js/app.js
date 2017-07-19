@@ -42030,7 +42030,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		fetchTasks: function fetchTasks() {
 			var _this2 = this;
 
-			axios.get('/api/tasks').then(function (response) {
+			axios.get('/').then(function (response) {
 				_this2.tasks = response.data;
 				_this2.setSubArrays();
 			});
@@ -42130,9 +42130,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+	data: function data() {
+		return {
+			dataSet: {
+				title: '',
+				description: ''
+			}
+		};
+	},
+
 	methods: {
 		closeModal: function closeModal() {
 			this.$emit('close-new-task');
+		},
+		createNewTask: function createNewTask() {
+			var _this = this;
+
+			axios.post('/tasks', this.dataSet).then(function () {
+				_this.$emit('new-task-created');
+				_this.$emit('close-new-task');
+			}).catch(function (error) {
+				console.log(error);
+			});
 		}
 	}
 });
@@ -42150,9 +42169,71 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-content"
   }, [_c('div', {
     staticClass: "task-form"
-  }, [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
+  }, [_c('div', {
+    staticClass: "field"
+  }, [_c('label', {
+    staticClass: "label"
+  }, [_vm._v("Task Title")]), _vm._v(" "), _c('div', {
+    staticClass: "control"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.dataSet.title),
+      expression: "dataSet.title"
+    }],
+    staticClass: "input",
+    attrs: {
+      "type": "text",
+      "placeholder": "Task Title",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.dataSet.title)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.dataSet.title = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "field"
+  }, [_c('label', {
+    staticClass: "label"
+  }, [_vm._v("Task Description")]), _vm._v(" "), _c('div', {
+    staticClass: "control"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.dataSet.description),
+      expression: "dataSet.description"
+    }],
+    staticClass: "textarea",
+    attrs: {
+      "placeholder": "Pick up eggs, milk, and staples...",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.dataSet.description)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.dataSet.description = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
     staticClass: "field is-grouped flex-center"
-  }, [_vm._m(2), _vm._v(" "), _c('div', {
+  }, [_c('div', {
+    staticClass: "control"
+  }, [_c('button', {
+    staticClass: "button is-primary",
+    on: {
+      "click": _vm.createNewTask
+    }
+  }, [_vm._v("Submit")])]), _vm._v(" "), _c('div', {
     staticClass: "control"
   }, [_c('button', {
     staticClass: "button is-link",
@@ -42165,40 +42246,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.closeModal
     }
   })])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "field"
-  }, [_c('label', {
-    staticClass: "label"
-  }, [_vm._v("Task Title")]), _vm._v(" "), _c('div', {
-    staticClass: "control"
-  }, [_c('input', {
-    staticClass: "input",
-    attrs: {
-      "type": "text",
-      "placeholder": "Task Title"
-    }
-  })])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "field"
-  }, [_c('label', {
-    staticClass: "label"
-  }, [_vm._v("Task Description")]), _vm._v(" "), _c('div', {
-    staticClass: "control"
-  }, [_c('textarea', {
-    staticClass: "textarea",
-    attrs: {
-      "placeholder": "Pick up eggs, milk, and staples..."
-    }
-  })])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "control"
-  }, [_c('button', {
-    staticClass: "button is-primary"
-  }, [_vm._v("Submit")])])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -42301,11 +42349,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['todo', 'column'],
+    data: function data() {
+        return {
+            editing: false
+        };
+    },
+
     methods: {
         promoteTask: function promoteTask() {
             var _this = this;
@@ -42332,6 +42393,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         deleteTask: function deleteTask() {
             axios.delete('tasks/' + this.todo.id);
             this.$emit('task-changed');
+        },
+        updateTask: function updateTask() {
+            var _this3 = this;
+
+            axios.patch('/tasks/' + this.todo.id, {
+                title: this.todo.title,
+                description: this.todo.description
+            }).then(function () {
+                _this3.editing = false;
+            });
         }
     },
     computed: {
@@ -42340,7 +42411,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return '/tasks/' + this.todo.id + '/' + newStatus;
         },
         created: function created() {
-            return __WEBPACK_IMPORTED_MODULE_0_moment___default()(this.todo.created_at).format('hh:mm A - D MMM YYYY');
+            return __WEBPACK_IMPORTED_MODULE_0_moment___default()(this.todo.created_at).fromNow();
         }
     }
 });
@@ -42357,19 +42428,47 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('p', {
     staticClass: "card-header-title center-text"
   }, [_vm._v("\n            " + _vm._s(_vm.todo.title) + "\n        ")]), _vm._v(" "), _c('a', {
-    staticClass: "card-header-icon"
-  }, [_c('span', {
-    staticClass: "icon"
-  }, [_c('i', {
-    staticClass: "fa fa-times",
+    staticClass: "card-header-icon",
     on: {
       "click": _vm.deleteTask
     }
-  })])])]), _vm._v(" "), _c('div', {
+  }, [_vm._m(0)])]), _vm._v(" "), _c('div', {
     staticClass: "card-content"
   }, [_c('div', {
     staticClass: "content"
-  }, [_vm._v("\n            " + _vm._s(_vm.todo.description) + "\n            "), _c('br'), _vm._v(" "), _c('small', {
+  }, [(_vm.editing) ? _c('div', {
+    staticClass: "flex-container flex-vertical"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.todo.description),
+      expression: "todo.description"
+    }],
+    staticClass: "form-control",
+    domProps: {
+      "value": (_vm.todo.description)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.todo.description = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('a', {
+    staticClass: "text-center",
+    on: {
+      "click": function($event) {
+        _vm.editing = false
+      }
+    }
+  }, [_vm._v("Cancel")])]) : _c('div', {
+    domProps: {
+      "textContent": _vm._s(_vm.todo.description)
+    }
+  }), _vm._v(" "), _c('br'), _vm._v(" "), _c('small', {
     domProps: {
       "textContent": _vm._s(_vm.created)
     }
@@ -42391,9 +42490,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-angle-double-left"
-  })]), _vm._v(" "), _c('a', {
-    staticClass: "card-footer-item"
-  }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
+  })]), _vm._v(" "), (!_vm.editing) ? _c('a', {
+    staticClass: "card-footer-item",
+    on: {
+      "click": function($event) {
+        _vm.editing = !_vm.editing
+      }
+    }
+  }, [_vm._v("Edit")]) : _c('a', {
+    staticClass: "card-footer-item",
+    on: {
+      "click": _vm.updateTask
+    }
+  }, [_vm._v("Update")]), _vm._v(" "), _c('a', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -42410,7 +42519,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "fa fa-angle-double-right"
   })])])])
-},staticRenderFns: []}
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', {
+    staticClass: "icon"
+  }, [_c('i', {
+    staticClass: "fa fa-times"
+  })])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

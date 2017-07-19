@@ -19,6 +19,10 @@ html, body {
 	flex-wrap: wrap;
 }
 
+.flex-vertical {
+	flex-direction: column;
+}
+
 .flex-center {
 	justify-content: center !important;
 }

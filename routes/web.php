@@ -26,5 +26,6 @@ Route::get('api/tasks', function() {
 });
 Route::get('tasks/create', 'TodosController@create');
 Route::post('tasks', 'TodosController@store');
+Route::patch('tasks/{todo}', 'TodosController@update');
 Route::patch('tasks/{todo}/{status}', 'TodosController@update');
 Route::delete('tasks/{todo}', 'TodosController@destroy');

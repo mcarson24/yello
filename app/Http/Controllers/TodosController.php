@@ -8,8 +8,22 @@ use Symfony\Component\Console\Exception\RuntimeException;
 
 class TodosController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
+        if (request()->wantsJson())
+        {
+            return [
+                0 => Todo::for(auth()->user())->sortedTodos(0)->get(),
+                1 => Todo::for(auth()->user())->sortedTodos(1)->get(),
+                2 => Todo::for(auth()->user())->sortedTodos(2)->get(),
+            ];
+        }
+
     	return view('todos.index');
     }
 
@@ -25,21 +39,26 @@ class TodosController extends Controller
     		'description' 	=> 'required|min:5'
 		]);
 
-    	Todo::create(request()->only(['title', 'description']));
+        auth()->user()->tasks()->create(request()->only(['title', 'description']));
 
-        return view('todos.index');
+        return response()->json([], 201);
     }
 
-    public function update(Todo $todo, $status)
+    public function update(Todo $todo, $status = null)
     {
-        if (!in_array($status, [0, 1, 2]))
+        if (! is_null($status)) 
         {
-            throw new RuntimeException;
+            if (!in_array($status, [0, 1, 2]))
+            {
+                throw new RuntimeException;
+            }
+
+            $todo->markAs($status);
+
+            return response()->json([], 200);
         }
 
-        $todo->markAs($status);
-
-        return response()->json([], 200);
+        $todo->update(request()->only(['title', 'description']));
     }
 
     public function destroy(Todo $todo)

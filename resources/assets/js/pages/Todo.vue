@@ -17,7 +17,7 @@
 		},
 		methods: {
 			fetchTasks() {
-				axios.get('/api/tasks').then(response => {
+				axios.get('/').then(response => {
 					this.tasks = response.data;
 					this.setSubArrays();
 				});
