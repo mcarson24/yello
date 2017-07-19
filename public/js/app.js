@@ -895,8 +895,8 @@ window.Vue = __webpack_require__(36);
  */
 
 Vue.component('example', __webpack_require__(37));
-Vue.component('todo-view', __webpack_require__(40));
-Vue.component('todo', __webpack_require__(55));
+Vue.component('todos-view', __webpack_require__(181));
+Vue.component('todo', __webpack_require__(183));
 Vue.component('todo-listing', __webpack_require__(58));
 Vue.component('new-task', __webpack_require__(42));
 
@@ -41962,91 +41962,8 @@ if (false) {
 }
 
 /***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var Component = __webpack_require__(2)(
-  /* script */
-  __webpack_require__(41),
-  /* template */
-  null,
-  /* styles */
-  null,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "/Users/matthew/code/stukdo/resources/assets/js/pages/Todo.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-ea9729f8", Component.options)
-  } else {
-    hotAPI.reload("data-v-ea9729f8", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 41 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-	data: function data() {
-		return {
-			newTodo: false,
-			tasks: [],
-			todo: [],
-			doing: [],
-			done: []
-		};
-	},
-	created: function created() {
-		var _this = this;
-
-		this.fetchTasks();
-		setTimeout(function () {
-			_this.setSubArrays();
-		}, 100);
-	},
-
-	methods: {
-		fetchTasks: function fetchTasks() {
-			var _this2 = this;
-
-			axios.get('/').then(function (response) {
-				_this2.tasks = response.data;
-				_this2.setSubArrays();
-			});
-		},
-		closeNewTask: function closeNewTask() {
-			this.newTodo = !this.newTodo;
-		},
-		setSubArrays: function setSubArrays() {
-			this.todo = this.tasks[0];
-			this.doing = this.tasks[1];
-			this.done = this.tasks[2];
-		}
-	}
-});
-
-/***/ }),
+/* 40 */,
+/* 41 */,
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -42294,270 +42211,9 @@ if (false) {
 /* 52 */,
 /* 53 */,
 /* 54 */,
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var Component = __webpack_require__(2)(
-  /* script */
-  __webpack_require__(56),
-  /* template */
-  __webpack_require__(57),
-  /* styles */
-  null,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "/Users/matthew/code/stukdo/resources/assets/js/components/Task.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Task.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6794e05b", Component.options)
-  } else {
-    hotAPI.reload("data-v-6794e05b", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 56 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['todo', 'column'],
-    data: function data() {
-        return {
-            editing: false
-        };
-    },
-
-    methods: {
-        promoteTask: function promoteTask() {
-            var _this = this;
-
-            this.todo.status = this.todo.status + 1;
-
-            axios.patch(this.endpoint, []);
-
-            setTimeout(function () {
-                _this.$emit('task-changed');
-            }, 100);
-        },
-        demoteTask: function demoteTask() {
-            var _this2 = this;
-
-            this.todo.status = this.todo.status - 1;
-
-            axios.patch(this.endpoint, []);
-
-            setTimeout(function () {
-                _this2.$emit('task-changed');
-            }, 100);
-        },
-        deleteTask: function deleteTask() {
-            axios.delete('tasks/' + this.todo.id);
-            this.$emit('task-changed');
-        },
-        updateTask: function updateTask() {
-            var _this3 = this;
-
-            axios.patch('/tasks/' + this.todo.id, {
-                title: this.todo.title,
-                description: this.todo.description
-            }).then(function () {
-                _this3.editing = false;
-            });
-        }
-    },
-    computed: {
-        endpoint: function endpoint() {
-            var newStatus = this.todo.status;
-            return '/tasks/' + this.todo.id + '/' + newStatus;
-        },
-        created: function created() {
-            return __WEBPACK_IMPORTED_MODULE_0_moment___default()(this.todo.created_at).fromNow();
-        }
-    }
-});
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "card mar-top-bot-15"
-  }, [_c('header', {
-    staticClass: "card-header"
-  }, [_c('p', {
-    staticClass: "card-header-title center-text"
-  }, [_vm._v("\n            " + _vm._s(_vm.todo.title) + "\n        ")]), _vm._v(" "), _c('a', {
-    staticClass: "card-header-icon",
-    on: {
-      "click": _vm.deleteTask
-    }
-  }, [_vm._m(0)])]), _vm._v(" "), _c('div', {
-    staticClass: "card-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [(_vm.editing) ? _c('div', {
-    staticClass: "flex-container flex-vertical"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.todo.description),
-      expression: "todo.description"
-    }],
-    staticClass: "form-control",
-    domProps: {
-      "value": (_vm.todo.description)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.todo.description = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('a', {
-    staticClass: "text-center",
-    on: {
-      "click": function($event) {
-        _vm.editing = false
-      }
-    }
-  }, [_vm._v("Cancel")])]) : _c('div', {
-    domProps: {
-      "textContent": _vm._s(_vm.todo.description)
-    }
-  }), _vm._v(" "), _c('br'), _vm._v(" "), _c('small', {
-    domProps: {
-      "textContent": _vm._s(_vm.created)
-    }
-  })])]), _vm._v(" "), _c('footer', {
-    staticClass: "card-footer"
-  }, [_c('a', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.column !== 'todo'),
-      expression: "column !== 'todo'"
-    }],
-    staticClass: "card-footer-item",
-    attrs: {
-      "href": "#"
-    },
-    on: {
-      "click": _vm.demoteTask
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-angle-double-left"
-  })]), _vm._v(" "), (!_vm.editing) ? _c('a', {
-    staticClass: "card-footer-item",
-    on: {
-      "click": function($event) {
-        _vm.editing = !_vm.editing
-      }
-    }
-  }, [_vm._v("Edit")]) : _c('a', {
-    staticClass: "card-footer-item",
-    on: {
-      "click": _vm.updateTask
-    }
-  }, [_vm._v("Update")]), _vm._v(" "), _c('a', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.column !== 'done'),
-      expression: "column !== 'done'"
-    }],
-    staticClass: "card-footer-item",
-    attrs: {
-      "href": "#"
-    },
-    on: {
-      "click": _vm.promoteTask
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-angle-double-right"
-  })])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('span', {
-    staticClass: "icon"
-  }, [_c('i', {
-    staticClass: "fa fa-times"
-  })])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-6794e05b", module.exports)
-  }
-}
-
-/***/ }),
+/* 55 */,
+/* 56 */,
+/* 57 */,
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -58450,6 +58106,358 @@ webpackContext.keys = function webpackContextKeys() {
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
 webpackContext.id = 177;
+
+/***/ }),
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(182),
+  /* template */
+  null,
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/matthew/code/stukdo/resources/assets/js/pages/Todos.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-60f6d2c2", Component.options)
+  } else {
+    hotAPI.reload("data-v-60f6d2c2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 182 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	data: function data() {
+		return {
+			newTodo: false,
+			tasks: [],
+			todo: [],
+			doing: [],
+			done: []
+		};
+	},
+	created: function created() {
+		var _this = this;
+
+		this.fetchTasks();
+		setTimeout(function () {
+			_this.setSubArrays();
+		}, 100);
+	},
+
+	methods: {
+		fetchTasks: function fetchTasks() {
+			var _this2 = this;
+
+			axios.get('/').then(function (response) {
+				_this2.tasks = response.data;
+				_this2.setSubArrays();
+			});
+		},
+		closeNewTask: function closeNewTask() {
+			this.newTodo = !this.newTodo;
+		},
+		setSubArrays: function setSubArrays() {
+			this.todo = this.tasks[0];
+			this.doing = this.tasks[1];
+			this.done = this.tasks[2];
+		}
+	}
+});
+
+/***/ }),
+/* 183 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(184),
+  /* template */
+  __webpack_require__(185),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/matthew/code/stukdo/resources/assets/js/components/Todo.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Todo.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-32cbca9c", Component.options)
+  } else {
+    hotAPI.reload("data-v-32cbca9c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 184 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['todo', 'column'],
+    data: function data() {
+        return {
+            editing: false
+        };
+    },
+
+    methods: {
+        promoteTask: function promoteTask() {
+            var _this = this;
+
+            this.todo.status = this.todo.status + 1;
+
+            axios.patch(this.endpoint, []);
+
+            setTimeout(function () {
+                _this.$emit('task-changed');
+            }, 100);
+        },
+        demoteTask: function demoteTask() {
+            var _this2 = this;
+
+            this.todo.status = this.todo.status - 1;
+
+            axios.patch(this.endpoint, []);
+
+            setTimeout(function () {
+                _this2.$emit('task-changed');
+            }, 100);
+        },
+        deleteTask: function deleteTask() {
+            axios.delete('tasks/' + this.todo.id);
+            this.$emit('task-changed');
+        },
+        updateTask: function updateTask() {
+            var _this3 = this;
+
+            axios.patch('/tasks/' + this.todo.id, {
+                title: this.todo.title,
+                description: this.todo.description
+            }).then(function () {
+                _this3.editing = false;
+            });
+        }
+    },
+    computed: {
+        endpoint: function endpoint() {
+            var newStatus = this.todo.status;
+            return '/tasks/' + this.todo.id + '/' + newStatus;
+        },
+        created: function created() {
+            return __WEBPACK_IMPORTED_MODULE_0_moment___default()(this.todo.created_at).fromNow();
+        }
+    }
+});
+
+/***/ }),
+/* 185 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "card mar-top-bot-15"
+  }, [_c('header', {
+    staticClass: "card-header"
+  }, [_c('p', {
+    staticClass: "card-header-title center-text"
+  }, [_vm._v("\n            " + _vm._s(_vm.todo.title) + "\n        ")]), _vm._v(" "), _c('a', {
+    staticClass: "card-header-icon",
+    on: {
+      "click": _vm.deleteTask
+    }
+  }, [_vm._m(0)])]), _vm._v(" "), _c('div', {
+    staticClass: "card-content"
+  }, [_c('div', {
+    staticClass: "content"
+  }, [(_vm.editing) ? _c('div', {
+    staticClass: "flex-container flex-vertical"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.todo.description),
+      expression: "todo.description"
+    }],
+    staticClass: "form-control",
+    domProps: {
+      "value": (_vm.todo.description)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.todo.description = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('a', {
+    staticClass: "text-center",
+    on: {
+      "click": function($event) {
+        _vm.editing = false
+      }
+    }
+  }, [_vm._v("Cancel")])]) : _c('div', {
+    domProps: {
+      "textContent": _vm._s(_vm.todo.description)
+    }
+  }), _vm._v(" "), _c('br'), _vm._v(" "), _c('small', {
+    domProps: {
+      "textContent": _vm._s(_vm.created)
+    }
+  })])]), _vm._v(" "), _c('footer', {
+    staticClass: "card-footer"
+  }, [_c('a', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.column !== 'todo'),
+      expression: "column !== 'todo'"
+    }],
+    staticClass: "card-footer-item",
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": _vm.demoteTask
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-angle-double-left"
+  })]), _vm._v(" "), (!_vm.editing) ? _c('a', {
+    staticClass: "card-footer-item",
+    on: {
+      "click": function($event) {
+        _vm.editing = !_vm.editing
+      }
+    }
+  }, [_vm._v("Edit")]) : _c('a', {
+    staticClass: "card-footer-item",
+    on: {
+      "click": _vm.updateTask
+    }
+  }, [_vm._v("Update")]), _vm._v(" "), _c('a', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.column !== 'done'),
+      expression: "column !== 'done'"
+    }],
+    staticClass: "card-footer-item",
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": _vm.promoteTask
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-angle-double-right"
+  })])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', {
+    staticClass: "icon"
+  }, [_c('i', {
+    staticClass: "fa fa-times"
+  })])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-32cbca9c", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

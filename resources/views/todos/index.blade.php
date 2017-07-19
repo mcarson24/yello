@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class="container">
-		<todo-view inline-template>
+		<todos-view inline-template>
 			<section class="section slight-shadow">
 				<div class="container todo-container">
 					<h1 class="title text-center">Your Tasks</h1>
@@ -48,6 +48,6 @@
 					</div>
 				</div>
 			</section>
-		</todo-view>
+		</todos-view>
 	</div>
 @endsection

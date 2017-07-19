@@ -16,8 +16,8 @@ window.Vue = require('vue');
  */
 
 Vue.component('example', require('./components/Example.vue'));
-Vue.component('todo-view', require('./pages/Todo.vue'));
-Vue.component('todo', require('./components/Task.vue'));
+Vue.component('todos-view', require('./pages/Todos.vue'));
+Vue.component('todo', require('./components/Todo.vue'));
 Vue.component('todo-listing', require('./components/TodoListing.vue'));
 Vue.component('new-task', require('./components/NewTask.vue'));
 
