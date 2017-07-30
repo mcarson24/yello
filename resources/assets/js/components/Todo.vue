@@ -25,12 +25,16 @@
         </div>
         <footer class="card-footer">
             <a class="card-footer-item" href="#" @click="demoteTask" v-show="column !== 'todo'">
-                <i class="fa fa-angle-double-left"></i>
+                <svg class="zondicon arrow-thick-left icon" alt="Left facing arrow icon">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#zondicon-arrow-thick-left"></use>
+                </svg>
             </a>
             <a class="card-footer-item" v-if="!editing" @click="editing = !editing">Edit</a>
             <a class="card-footer-item" v-else @click="updateTask">Update</a>
             <a class="card-footer-item" href="#" @click="promoteTask" v-show="column !== 'done'">
-                <i class="fa fa-angle-double-right" ></i>
+                <svg class="zondicon arrow-thick-right icon" alt="Right facing arrow icon">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#zondicon-arrow-thick-right"></use>
+                </svg>
             </a>
         </footer>
     </div>
