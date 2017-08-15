@@ -57468,22 +57468,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			done: []
 		};
 	},
-	created: function created() {
+	mounted: function mounted() {
 		var _this = this;
+
+		document.addEventListener('keydown', function (e) {
+			if (_this.newTodo && e.keyCode == 27) {
+				_this.closeNewTask();
+			}
+		});
+	},
+	created: function created() {
+		var _this2 = this;
 
 		this.fetchTasks();
 		setTimeout(function () {
-			_this.setSubArrays();
+			_this2.setSubArrays();
 		}, 100);
 	},
 
 	methods: {
 		fetchTasks: function fetchTasks() {
-			var _this2 = this;
+			var _this3 = this;
 
 			axios.get('/').then(function (response) {
-				_this2.tasks = response.data;
-				_this2.setSubArrays();
+				_this3.tasks = response.data;
+				_this3.setSubArrays();
 			});
 		},
 		closeNewTask: function closeNewTask() {
@@ -57629,7 +57638,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', [_c('div', {
     staticClass: "modal is-active"
   }, [_c('div', {
-    staticClass: "modal-background"
+    staticClass: "modal-background",
+    on: {
+      "click": _vm.closeModal
+    }
   }), _vm._v(" "), _c('div', {
     staticClass: "modal-content"
   }, [_c('div', {

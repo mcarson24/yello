@@ -9,6 +9,13 @@
 				done: []
 			}
 		},
+		mounted() {
+			document.addEventListener('keydown', e => {
+				if (this.newTodo && e.keyCode == 27) {
+					this.closeNewTask();
+				}
+			});
+		},
 		created() {
 			this.fetchTasks();
 			setTimeout(() => {

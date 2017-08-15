@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="modal is-active">
-		  <div class="modal-background"></div>
+		  <div class="modal-background" @click="closeModal"></div>
 		  <div class="modal-content">
 		    <div class="task-form">
 		    	<div v-if="hasErrors" class="alert alert-danger" role="alert">
